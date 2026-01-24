@@ -9,51 +9,51 @@ importers:
   .:
     devDependencies:
       '@types/node':
-        specifier: ^25.0.3
-        version: 25.0.3
+        specifier: ^25.0.10
+        version: 25.0.10
       '@types/react':
-        specifier: ^19.2.7
-        version: 19.2.7
+        specifier: ^19.2.9
+        version: 19.2.9
       '@vencord/types':
-        specifier: ^1.13.7
-        version: 1.13.7(@types/react-dom@18.3.1)(@types/react@19.2.7)
+        specifier: ^1.14.1
+        version: 1.14.1(@types/react-dom@18.3.1)(@types/react@19.2.9)
       '@zenfs/core':
         specifier: ^2.4.4
         version: 2.4.4
       '@zenfs/dom':
-        specifier: ^1.2.6
-        version: 1.2.6(@zenfs/core@2.4.4)(kerium@1.3.8)(utilium@2.5.8)
+        specifier: ^1.2.7
+        version: 1.2.7(@zenfs/core@2.4.4)(kerium@1.3.8)(utilium@2.6.0)
       real-fs-client:
         specifier: github:LosersUnited/RealFS-client
-        version: https://codeload.github.com/LosersUnited/RealFS-client/tar.gz/563ce660b668533f7702a243e347b52b1ad7c4c1
+        version: https://codeload.github.com/LosersUnited/RealFS-client/tar.gz/8b49832808be0da085a032689914f47c6a6f787b
 
 packages:
 
   '@types/lodash@4.17.15':
     resolution: {integrity: sha512-w/P33JFeySuhN6JLkysYUK2gEmy9kHHFN7E8ro0tkfmlDOgxBDzWEZ/J8cWA+fHqFevpswDTFZnDx+R9lbL6xw==}
 
-  '@types/node@22.19.3':
-    resolution: {integrity: sha512-1N9SBnWYOJTrNZCdh/yJE+t910Y128BoyY+zBLWhL3r0TYzlTmFdXrPwHL9DyFZmlEXNQQolTZh3KHV31QDhyA==}
+  '@types/node@22.19.7':
+    resolution: {integrity: sha512-MciR4AKGHWl7xwxkBa6xUGxQJ4VBOmPTF7sL+iGzuahOFaO0jHCsuEfS80pan1ef4gWId1oWOweIhrDEYLuaOw==}
 
-  '@types/node@24.10.4':
-    resolution: {integrity: sha512-vnDVpYPMzs4wunl27jHrfmwojOGKya0xyM3sH+UE5iv5uPS6vX7UIoh6m+vQc5LGBq52HBKPIn/zcSZVzeDEZg==}
+  '@types/node@24.10.9':
+    resolution: {integrity: sha512-ne4A0IpG3+2ETuREInjPNhUGis1SFjv1d5asp8MzEAGtOZeTeHVDOYqOgqfhvseqg/iXty2hjBf1zAOb7RNiNw==}
 
-  '@types/node@25.0.3':
-    resolution: {integrity: sha512-W609buLVRVmeW693xKfzHeIV6nJGGz98uCPfeXI1ELMLXVeKYZ9m15fAMSaUPBHYLGFsVRcMmSCksQOrZV9BYA==}
+  '@types/node@25.0.10':
+    resolution: {integrity: sha512-zWW5KPngR/yvakJgGOmZ5vTBemDoSqF3AcV/LrO5u5wTWyEAVVh+IT39G4gtyAkh3CtTZs8aX/yRM82OfzHJRg==}
 
   '@types/react-dom@18.3.1':
     resolution: {integrity: sha512-qW1Mfv8taImTthu4KoXgDfLuk4bydU6Q/TkADnDWWHwi4NX4BR+LWfTp2sVmTqRrsHvyDDTelgelxJ+SsejKKQ==}
 
-  '@types/react@19.2.7':
-    resolution: {integrity: sha512-MWtvHrGZLFttgeEj28VXHxpmwYbor/ATPYbBfSFZEIRK0ecCFLl2Qo55z52Hss+UV9CRN7trSeq1zbgx7YDWWg==}
+  '@types/react@19.2.9':
+    resolution: {integrity: sha512-Lpo8kgb/igvMIPeNV2rsYKTgaORYdO1XGVZ4Qz3akwOj0ySGYMPlQWa8BaLn0G63D1aSaAQ5ldR06wCpChQCjA==}
 
   '@vencord/discord-types@1.0.0':
     resolution: {integrity: sha512-idtijKdbjiqo8k+4mo5Aq9zrQYwr2u11VmiRasaf+8+cGC5bYsMTIZl7zKLF3VdYx2a0ICjxgZtcfa1U3mv1Yg==}
     peerDependencies:
       '@types/react': ^19.0.10
 
-  '@vencord/types@1.13.7':
-    resolution: {integrity: sha512-MThrBwMEJ0CvKMrVgJC4cvJuDwwFXEhgSOJnmDZxmJeKOByVWLo7xxjn1suHkE1/euw9J5lGTfz1QTiYVXbLqA==}
+  '@vencord/types@1.14.1':
+    resolution: {integrity: sha512-P4eYl3IJKXLjAWH2Ejs2/z8eOS0LsuTNFqL9OHXQRXtOWoAEYNG6z9MXH25Thr/dIUH839IZCW872XjOSVIauQ==}
     peerDependencies:
       '@types/react': 18.3.1
       '@types/react-dom': 18.3.1
@@ -66,8 +66,8 @@ packages:
     engines: {node: '>= 18'}
     hasBin: true
 
-  '@zenfs/dom@1.2.6':
-    resolution: {integrity: sha512-gIoYg/kBi8N+3OAQt9MFXPJrwhYvPzLjJdy+3Ln9csofY0Wgt+PENrj5/9pODyBdX1+Ug+KKEcPTEmmGkd7/ww==}
+  '@zenfs/dom@1.2.7':
+    resolution: {integrity: sha512-f0V512ROaUf44fKItRvZV3DQLMwo4jnQoprWGyasDSwn2oDG1TPkJ+vak3iuhqZgWD/wTWmXbpv3KE/yKDBGiA==}
     engines: {node: '>= 22'}
     peerDependencies:
       '@zenfs/core': ^2.3.11
@@ -95,8 +95,8 @@ packages:
     resolution: {integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==}
     engines: {node: '>=6'}
 
-  eventemitter3@5.0.1:
-    resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
+  eventemitter3@5.0.4:
+    resolution: {integrity: sha512-mlsTRyGaPBjPedk6Bvw+aqbsXDtoAyAzm5MO7JgU+yVRyMQ5O8bD4Kcci7BS85f93veegeCPkL8R4GLClnjLFw==}
 
   events@3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
@@ -126,8 +126,8 @@ packages:
     resolution: {integrity: sha512-oIGGmcpTLwPga8Bn6/Z75SVaH1z5dUut2ibSyAMVhmUggWpmDn2dapB0n7f8nwaSiRtepAsfJyfXIO5DCVAODg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  real-fs-client@https://codeload.github.com/LosersUnited/RealFS-client/tar.gz/563ce660b668533f7702a243e347b52b1ad7c4c1:
-    resolution: {tarball: https://codeload.github.com/LosersUnited/RealFS-client/tar.gz/563ce660b668533f7702a243e347b52b1ad7c4c1}
+  real-fs-client@https://codeload.github.com/LosersUnited/RealFS-client/tar.gz/8b49832808be0da085a032689914f47c6a6f787b:
+    resolution: {tarball: https://codeload.github.com/LosersUnited/RealFS-client/tar.gz/8b49832808be0da085a032689914f47c6a6f787b}
     version: 1.0.0
 
   safe-buffer@5.2.1:
@@ -149,8 +149,8 @@ packages:
   undici-types@7.16.0:
     resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
 
-  utilium@2.5.8:
-    resolution: {integrity: sha512-RNXAYoYH7hefayCW/2LU3SYCwDGQlDc8f4gPCRbMO6dJsYGGlzAhyHqYQGp73ox41JtPKjdqzddAbDhWQ9MrXQ==}
+  utilium@2.6.0:
+    resolution: {integrity: sha512-XIsFQrHyrss6Ex+Z2l5aAItPFJvkw/5vrCt2+C7uY1y6De18u8cIwL9qrzezfpGcgL0fi7FZhTBbgXZKD4rwxA==}
     engines: {node: '>=22.0.0'}
     hasBin: true
 
@@ -158,39 +158,39 @@ snapshots:
 
   '@types/lodash@4.17.15': {}
 
-  '@types/node@22.19.3':
+  '@types/node@22.19.7':
     dependencies:
       undici-types: 6.21.0
 
-  '@types/node@24.10.4':
+  '@types/node@24.10.9':
     dependencies:
       undici-types: 7.16.0
 
-  '@types/node@25.0.3':
+  '@types/node@25.0.10':
     dependencies:
       undici-types: 7.16.0
 
   '@types/react-dom@18.3.1':
     dependencies:
-      '@types/react': 19.2.7
+      '@types/react': 19.2.9
 
-  '@types/react@19.2.7':
+  '@types/react@19.2.9':
     dependencies:
       csstype: 3.2.3
 
-  '@vencord/discord-types@1.0.0(@types/react@19.2.7)':
+  '@vencord/discord-types@1.0.0(@types/react@19.2.9)':
     dependencies:
-      '@types/react': 19.2.7
+      '@types/react': 19.2.9
       moment: 2.30.1
       type-fest: 4.41.0
 
-  '@vencord/types@1.13.7(@types/react-dom@18.3.1)(@types/react@19.2.7)':
+  '@vencord/types@1.14.1(@types/react-dom@18.3.1)(@types/react@19.2.9)':
     dependencies:
       '@types/lodash': 4.17.15
-      '@types/node': 22.19.3
-      '@types/react': 19.2.7
+      '@types/node': 22.19.7
+      '@types/react': 19.2.9
       '@types/react-dom': 18.3.1
-      '@vencord/discord-types': 1.0.0(@types/react@19.2.7)
+      '@vencord/discord-types': 1.0.0(@types/react@19.2.9)
       highlight.js: 11.11.1
       moment: 2.30.1
       ts-pattern: 5.9.0
@@ -201,19 +201,19 @@ snapshots:
 
   '@zenfs/core@2.4.4':
     dependencies:
-      '@types/node': 24.10.4
+      '@types/node': 24.10.9
       buffer: 6.0.3
-      eventemitter3: 5.0.1
+      eventemitter3: 5.0.4
       kerium: 1.3.8
       memium: 0.3.11
       readable-stream: 4.7.0
-      utilium: 2.5.8
+      utilium: 2.6.0
 
-  '@zenfs/dom@1.2.6(@zenfs/core@2.4.4)(kerium@1.3.8)(utilium@2.5.8)':
+  '@zenfs/dom@1.2.7(@zenfs/core@2.4.4)(kerium@1.3.8)(utilium@2.6.0)':
     dependencies:
       '@zenfs/core': 2.4.4
       kerium: 1.3.8
-      utilium: 2.5.8
+      utilium: 2.6.0
 
   RealFS-ng-prototype.git#dev@https://codeload.github.com/LosersUnited/RealFS-ng-prototype/tar.gz/eb473ca27545abdb74b9ebb3c9e990794212efb4: {}
 
@@ -232,7 +232,7 @@ snapshots:
 
   event-target-shim@5.0.1: {}
 
-  eventemitter3@5.0.1: {}
+  eventemitter3@5.0.4: {}
 
   events@3.3.0: {}
 
@@ -242,12 +242,12 @@ snapshots:
 
   kerium@1.3.8:
     dependencies:
-      utilium: 2.5.8
+      utilium: 2.6.0
 
   memium@0.3.11:
     dependencies:
       kerium: 1.3.8
-      utilium: 2.5.8
+      utilium: 2.6.0
 
   moment@2.30.1: {}
 
@@ -261,7 +261,7 @@ snapshots:
       process: 0.11.10
       string_decoder: 1.3.0
 
-  real-fs-client@https://codeload.github.com/LosersUnited/RealFS-client/tar.gz/563ce660b668533f7702a243e347b52b1ad7c4c1:
+  real-fs-client@https://codeload.github.com/LosersUnited/RealFS-client/tar.gz/8b49832808be0da085a032689914f47c6a6f787b:
     dependencies:
       '@zenfs/core': 2.4.4
       RealFS-ng-prototype.git#dev: https://codeload.github.com/LosersUnited/RealFS-ng-prototype/tar.gz/eb473ca27545abdb74b9ebb3c9e990794212efb4
@@ -280,8 +280,8 @@ snapshots:
 
   undici-types@7.16.0: {}
 
-  utilium@2.5.8:
+  utilium@2.6.0:
     dependencies:
-      eventemitter3: 5.0.1
+      eventemitter3: 5.0.4
     optionalDependencies:
       '@xterm/xterm': 5.5.0
