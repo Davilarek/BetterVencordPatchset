@@ -9,6 +9,9 @@
         "paths": {
             "@*": [
                 "node_modules/@vencord/types/*"
+            ],
+            "@plugins/bdCompatLayer/*": [
+                "src/bdCompatLayer/*"
             ]
         },
         "jsx": "react-jsx",

@@ -26,7 +26,7 @@ import { PluginMeta } from "~plugins";
 
 import { PLUGIN_NAME } from "./constants.js";
 import { getGlobalApi } from "./fakeBdApi.js";
-import { arrayToObject, compat_logger, createTextForm } from "./utils.js";
+import { arrayToObject, compat_logger, createTextForm, getDeferred } from "./utils.js";
 
 export type AssembledBetterDiscordPlugin = {
     started: boolean;
@@ -535,4 +535,18 @@ export async function removeAllCustomPlugins() {
     if (window.BDFDB_Global) // workaround... again
         delete window.BDFDB_Global;
     GeneratedPlugins.length = 0;
+}
+
+export function queueLoad(filePath: string, deferredReady: (ReturnType<typeof getDeferred<void>>)) {
+    const fileContent = window.require("fs").readFileSync(filePath, "utf-8");
+    queueMicrotask(async () => {
+        try {
+            const generatedPlugin = await convertPlugin(fileContent, window.require("path").basename(filePath), true, window.require("path").dirname(filePath));
+            await addCustomPlugin(generatedPlugin);
+            deferredReady.resolve();
+        }
+        catch (error) {
+            deferredReady.reject(error);
+        }
+    });
 }

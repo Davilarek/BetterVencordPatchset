@@ -89,7 +89,7 @@ export const PluginsHolder = {
         return Vencord.Plugins.isPluginEnabled(name);
     },
     get: function (name) {
-        return this.getAll().filter(x => x.name == name)[0] ?? this.getAll().filter(x => x.originalName == name)[0];
+        return PluginsHolder.getAll().filter(x => x.name == name)[0] ?? PluginsHolder.getAll().filter(x => x.originalName == name)[0];
     },
     reload: name => {
         Vencord.Plugins.stopPlugin(Vencord.Plugins.plugins[name]);
