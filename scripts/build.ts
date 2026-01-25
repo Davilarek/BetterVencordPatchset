@@ -213,11 +213,11 @@ type PatchKind = {
 
 const patches = [
     // Vencord Specific
-    {
-        file: "src/patch-webpack.patch",
-        targetFile: "src/webpack/patchWebpack.ts",
-        targetType: BuildTypes.VENCORD,
-    },
+    // {
+    //     file: "src/patch-webpack.patch",
+    //     targetFile: "src/webpack/patchWebpack.ts",
+    //     targetType: BuildTypes.VENCORD,
+    // },
     {
         file: "src/patch-package_json.patch",
         targetFile: "package.json",
@@ -240,11 +240,11 @@ const patches = [
     //     targetType: BuildTypes.UNIVERSAL,
     // },
     // Equicord Specific
-    {
-        file: "src/equicord/patch-webpack.patch",
-        targetFile: "src/webpack/patchWebpack.ts",
-        targetType: BuildTypes.EQUICORD,
-    },
+    // {
+    //     file: "src/equicord/patch-webpack.patch",
+    //     targetFile: "src/webpack/patchWebpack.ts",
+    //     targetType: BuildTypes.EQUICORD,
+    // },
     {
         file: "src/equicord/patch-package_json.patch",
         targetFile: "package.json",

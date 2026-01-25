@@ -16,6 +16,7 @@ namespace Webpack {
 /**
  * @summary Code taken from BetterDiscord (sourced from commit: c10d0b67c0fd53fee582cf5b8bc4779e80006983
  * @description Changes:
+ *  Made mapped[key] setter update the original module's property if it's a getter without a setter
  *
  *  Formatting changed
  */
@@ -40,7 +41,17 @@ function mapObject<T extends object>(module: any, mappers: Record<keyof T, Webpa
                         return module[searchKey];
                     },
                     set(value) {
-                        module[searchKey] = value;
+                        const desc = Object.getOwnPropertyDescriptor(module, searchKey);
+                        if (desc && desc.get && !desc.set && desc.configurable) {
+                            Object.defineProperty(module, searchKey, {
+                                value: value,
+                                writable: true,
+                                configurable: true,
+                                enumerable: desc.enumerable
+                            });
+                        } else {
+                            module[searchKey] = value;
+                        }
                     },
                     enumerable: true,
                     configurable: false

@@ -310,6 +310,8 @@ const wrapFilter = filter => (exports, module, moduleId) => {
  * @description Changes:
  *
  *  Occurrences of "this.getAllModules()" replaced with "Vencord.Webpack.cache"
+ *  Occurrences of "exports.ZP" replaced with "exports.Ay"
+ *  Occurrences of "exports.Z" replaced with "exports.A"
  *
  *  Formatting changed
  */
@@ -345,8 +347,8 @@ function getModule(filter, options = {}) {
         }
         else {
             let foundModule = null;
-            if (exports.Z && wrappedFilter(exports.Z, module, index)) foundModule = defaultExport ? exports.Z : exports;
-            if (exports.ZP && wrappedFilter(exports.ZP, module, index)) foundModule = defaultExport ? exports.ZP : exports;
+            if (exports.A && wrappedFilter(exports.A, module, index)) foundModule = defaultExport ? exports.A : exports;
+            if (exports.Ay && wrappedFilter(exports.Ay, module, index)) foundModule = defaultExport ? exports.Ay : exports;
             if (exports.__esModule && exports.default && wrappedFilter(exports.default, module, index)) foundModule = defaultExport ? exports.default : exports;
             if (wrappedFilter(exports, module, index)) foundModule = exports;
             if (!foundModule) continue;

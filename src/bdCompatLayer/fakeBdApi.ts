@@ -39,11 +39,11 @@ function getDefaultKey(module: any) {
     if (module.exports.__esModule && module.exports.default) {
         return "default";
     }
-    if (module.exports.Z) {
-        return "Z";
+    if (module.exports.A) {
+        return "A";
     }
-    if (module.exports.ZP) {
-        return "ZP";
+    if (module.exports.Ay) {
+        return "Ay";
     }
     return undefined;
 }
@@ -122,7 +122,19 @@ export const WebpackHolder = {
             return this.byProps.bind(WebpackHolder.Filters); // just in case
         },
         byProps: (...props) => {
-            return Vencord.Webpack.filters.byProps(...props);
+            return module => {
+                if (props.flat().at(-1) === true) {
+                    return Vencord.Webpack.filters.byProps(...props.flat().slice(0, -1))(module);
+                }
+                try {
+                    const asClassNames = Vencord.Webpack.filters.byClassNames(...props.flat().filter(p => typeof p === "string"));
+                    if (asClassNames(module)) return true;
+                }
+                catch {
+                    // ignore
+                }
+                return Vencord.Webpack.filters.byProps(...props)(module);
+            } // TODO: somehow make this be baked into startup like BD does? uhh... idk
         },
         byStoreName(name) {
             return module => {
@@ -161,6 +173,15 @@ export const WebpackHolder = {
             return x =>
                 x.prototype &&
                 [...fields.flat()].every(field => field in x.prototype);
+        },
+        byRegex(str: string) {
+            const regex = new RegExp(str);
+            return WebpackHolder.Filters.bySource(regex);
+        },
+        combine(...filters: Array<(e: any, m: any, i: any) => boolean>) {
+            return (e, m, i) => {
+                return filters.every(filter => filter(e, m, i));
+            };
         },
     },
     // getModule: BdApi_getModule,
@@ -224,7 +245,8 @@ export const WebpackHolder = {
         return this.getModule(this.Filters.byStrings(...strings), moreOpts);
     },
     getByProps(...props) {
-        return this.getModule(this.Filters.byProps(...props), {});
+        const moreOpts = getOptions(props, { first: true });
+        return this.getModule(this.Filters.byProps(...props), moreOpts);
     },
     get getByKeys() {
         return WebpackHolder.getByProps.bind(WebpackHolder);

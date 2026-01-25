@@ -410,6 +410,31 @@ const thePlugin = {
                     Object.defineProperty(ret, "name", { value: "BDPatcher" });
                     return ret;
                 };
+                const makePatchOriginal = Object.getOwnPropertyDescriptor(Patcher, "makePatch")!.value;
+                Object.defineProperty(Patcher, "makePatch", { // this is fragile, I hate it
+                    value: function makePatch(...args) {                      // but this possibly solves performance issues
+                        const [module, methodName] = args;
+                        if (module && methodName) {
+                            const desc = Object.getOwnPropertyDescriptor(module, methodName);
+                            if (desc && desc.get && !desc.set && desc.configurable) {
+                                const value = desc.get.call(module);
+                                Object.defineProperty(module, methodName, {
+                                    value: value,
+                                    writable: true,
+                                    configurable: true,
+                                    enumerable: desc.enumerable
+                                });
+                                compat_logger.debug(`Converted ${methodName} from getter to value for patching`);
+                            }
+                            else if (desc && !desc.writable && desc.configurable && !desc.get) {
+                                Object.defineProperty(module, methodName, {
+                                    writable: true
+                                });
+                            }
+                        }
+                        return makePatchOriginal.call(this, ...args);
+                    }
+                });
                 Patcher.setup(DiscordModules);
                 addContextMenu(DiscordModules, proxyUrl).then(ContextMenuInjectorOutput => {
                     const ContextMenu = ContextMenuInjectorOutput.output;
