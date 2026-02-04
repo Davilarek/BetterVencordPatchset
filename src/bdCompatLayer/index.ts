@@ -174,7 +174,7 @@ const thePlugin = {
             setup: getDeferred<void>(),
         };
         if (Settings.plugins[this.name].useRealFsInstead === true) {
-            target.client = new RealFSClient("127.0.0.1:8000/api/v1/ws"); // TODO: add option to change this
+            target.client = new RealFSClient("127.0.0.1:8000/api/v2/ws"); // TODO: add option to change this
             target.browserFSSetting = {
                 backend: RealFs,
                 sync: InMemory,
