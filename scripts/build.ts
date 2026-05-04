@@ -232,7 +232,12 @@ const patches = [
     {
         file: "src/patch-banImportPlugin.patch",
         targetFile: "scripts/build/common.mjs",
-        targetType: BuildTypes.UNIVERSAL,
+        targetType: BuildTypes.VENCORD,
+    },
+    {
+        file: "src/equicord/patch-banImportPlugin.patch",
+        targetFile: "scripts/build/common.mjs",
+        targetType: BuildTypes.EQUICORD,
     },
     // {
     //     file: "src/patch-updater.patch",

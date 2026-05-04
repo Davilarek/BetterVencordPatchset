@@ -133,7 +133,7 @@ export const WebpackHolder = {
                 catch {
                     // ignore
                 }
-                return Vencord.Webpack.filters.byProps(...props)(module);
+                return Vencord.Webpack.filters.byProps(...props.flat())(module);
             } // TODO: somehow make this be baked into startup like BD does? uhh... idk
         },
         byStoreName(name) {
@@ -250,6 +250,9 @@ export const WebpackHolder = {
     },
     get getByKeys() {
         return WebpackHolder.getByProps.bind(WebpackHolder);
+    },
+    getLazyByKeys(...etc) {
+        return WebpackHolder.waitForModule(WebpackHolder.Filters.byKeys(...etc));
     },
     getModules(...etc) {
         const [first, ...rest] = etc;
@@ -409,6 +412,17 @@ export const WebpackHolder = {
                 return keys;
             },
         });
+    },
+    getBulkKeyed<T extends object>(queries: { [s: string]: unknown; } | ArrayLike<unknown>): T {
+        const keys = Object.keys(queries) as (keyof T)[];
+        const values = Object.values(queries);
+        const modules = WebpackHolder.getBulk(...values);
+
+        const result = {} as T;
+        for (let i = 0; i < keys.length; i++) {
+            result[keys[i]] = modules[i];
+        }
+        return result;
     },
     getBulk(...queries: any[]) {
         const returnedModules = Array(queries.length);
@@ -984,6 +998,9 @@ export const DOMHolder = {
         const { childNodes } = template.content;
         return childNodes.length === 1 ? childNodes[0] : childNodes;
     },
+    injectStyle(...a: Parameters<typeof DOMHolder["addStyle"]>) {
+        return DOMHolder.addStyle(...a);
+    },
 };
 
 class DOMWrapper {
@@ -1001,6 +1018,9 @@ class DOMWrapper {
             id = this.#label;
         }
         return DOMHolder.addStyle(id, css);
+    }
+    injectStyle(...a: Parameters<DOMWrapper["addStyle"]>) {
+        return this.addStyle(...a);
     }
     removeStyle(id) {
         if (arguments.length === 1) {
@@ -1023,6 +1043,12 @@ const components = {
             components.Spinner_holder = Vencord.Webpack.findByCode(".SPINNER_LOADING_LABEL");
         return components.Spinner_holder;
     },
+};
+
+const exoticComponents = {
+    memo: Symbol.for("react.memo"),
+    forwardRef: Symbol.for("react.forward_ref"),
+    lazy: Symbol.for("react.lazy")
 };
 
 class BdApiReImplementationInstance {
@@ -1188,7 +1214,33 @@ class BdApiReImplementationInstance {
                     }
                 }
                 return null;
-            }
+            },
+            // based on https://github.com/BetterDiscord/BetterDiscord/blob/9077f55261846a7a25accbe151d59e18d85bbff4/src/betterdiscord/api/reactutils.ts#L294-L319
+            getType<T extends React.FC>(elementType: React.ElementType<T>): T {
+                while (true) {
+                    switch ((elementType as React.MemoExoticComponent<T> | React.ForwardRefExoticComponent<T>).$$typeof) {
+                        case exoticComponents.memo:
+                            elementType = (elementType as React.MemoExoticComponent<T>).type;
+                            break;
+                        case exoticComponents.forwardRef:
+                            elementType = (elementType as React.ForwardRefExoticComponent<T> & { render: T; }).render;
+                            break;
+                        case exoticComponents.lazy: {
+                            const _payload = (elementType as any)._payload;
+
+                            if (_payload._status === 1) {
+                                elementType = _payload._result.default;
+                            }
+                            else {
+                                throw new Error("impossible");
+                            }
+                            break;
+                        }
+                        default:
+                            return elementType as T;
+                    }
+                }
+            },
         };
     }
     findModuleByProps(...props) {

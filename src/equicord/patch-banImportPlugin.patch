@@ -1,0 +1,5 @@
+--- base/Vencord/scripts/build/common.mjs	2025-12-07 17:20:51.495544529 +0100
++++ dist/Vencord/scripts/build/common.mjs	2025-12-07 17:25:13.511518434 +0100
+@@ -241,1 +241,1 @@
+-            return { contents: `export default "${remote}"` };
++            return { contents: `export default "${remote}"; export const BV_REMOTE="${process.env.BV_REMOTE}"` };
