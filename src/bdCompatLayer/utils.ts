@@ -19,7 +19,9 @@
 import { Link } from "@components/Link";
 import { Logger } from "@utils/Logger";
 import { PluginNative } from "@utils/types";
-import { Forms, lodash, React } from "@webpack/common";
+import { lodash, React } from "@webpack/common";
+
+import { Forms } from "./discordShim";
 import * as fflate from "fflate";
 
 import { getGlobalApi } from "./fakeBdApi";
@@ -377,19 +379,24 @@ export const FSUtils = {
                 filePath += file.name;
             }
             compat_logger.log("[Importer] Resolved path:", filePath);
-            fs.writeFile(
-                filePath,
-                // window.BrowserFS.BFSRequire("buffer").Buffer.from(
-                // window.Buffer.from(
-                FSUtils.toBuffer(
-                    await file.arrayBuffer()
-                ),
-                err => {
-                    if (err)
-                        compat_logger.error("[Importer] Error during import", err);
-                    compat_logger.log("[Importer] Success");
-                }
-            );
+            const data = FSUtils.toBuffer(await file.arrayBuffer());
+            await new Promise<void>((resolve, reject) => {
+                fs.writeFile(
+                    filePath,
+                    // window.BrowserFS.BFSRequire("buffer").Buffer.from(
+                    // window.Buffer.from(
+                    data,
+                    err => {
+                        if (err) {
+                            compat_logger.error("[Importer] Error during import", err);
+                            reject(err);
+                        } else {
+                            compat_logger.log("[Importer] Success");
+                            resolve();
+                        }
+                    }
+                );
+            });
         }
     },
     exportFile(targetPath: string) {
@@ -403,7 +410,7 @@ export const FSUtils = {
                         reject(err);
                         return;
                     }
-                    const file = new Blob([data]);
+                    const file = new Blob([data as BlobPart]);
                     const blobUrl = URL.createObjectURL(file);
                     const newA = document.createElement("a");
                     newA.href = blobUrl;

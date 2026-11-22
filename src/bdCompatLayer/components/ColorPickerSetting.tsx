@@ -16,32 +16,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { SettingProps, SettingsSection } from "@components/settings/tabs/plugins/components/Common";
-import { PluginSettingCommon } from "@utils/types";
+import { SettingsSection } from "@components/settings/tabs/plugins/components/Common";
 import { ColorPicker, useState } from "@webpack/common";
 
-export function ColorPickerSettingComponent(props: SettingProps<PluginSettingCommon & { color: string, colorPresets: string[], }>) {
+export function ColorPickerSettingComponent(props: { onChange(value: any): void, option: any, pluginSettings: any, id: string; }) {
     const [error, setError] = useState<string | null>(null);
     const handleColorChange = (colorInt: number) => {
         const hexColor = "#" + colorInt.toString(16).padStart(6, "0");
         props.onChange(hexColor);
     };
-    return <SettingsSection name={props.id} description={props.option.description} error={error}>
-        {/* return (<div className={cl("settings")}>
-        <div className={cl("container")}>
-            <div className={cl("settings-labels")}>
-                {/* <Forms.FormTitle tag="h3"></Forms.FormTitle>/}
-                <Forms.FormText>${props.option.description}</Forms.FormText>
-            </div>
-            */}
+    return <SettingsSection name={props.option?.displayName} id={props.id} description={props.option?.description ?? ""} error={error}>
         <ColorPicker
-            color={parseInt((props.option.color || "#000000").replace("#", ""), 16)}
+            color={parseInt((props.option?.color || "#000000").replace("#", ""), 16)}
             onChange={handleColorChange}
             showEyeDropper={false}
-            suggestedColors={props.option.colorPresets}
-        // {...props.option.componentProps}
+            suggestedColors={props.option?.colorPresets}
         />
-        {/* </div>*/}
-        {/* </div>);*/}
     </SettingsSection>
 }

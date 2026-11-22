@@ -1,13 +1,7 @@
 --- base/Vencord/scripts/build/common.mjs	2025-12-07 17:20:51.495544529 +0100
 +++ dist/Vencord/scripts/build/common.mjs	2025-12-07 17:25:13.511518434 +0100
-@@ -368,7 +368,6 @@
- const builtinModuleRegex = new RegExp(`^(node:)?(${escapedBuiltinModules})$`);
- 
- export const commonRendererPlugins = [
--    banImportPlugin(builtinModuleRegex, "Cannot import node inbuilt modules in browser code. You need to use a native.ts file"),
-     banImportPlugin(/^react$/, "Cannot import from react. React and hooks should be imported from @webpack/common"),
-     banImportPlugin(/^electron(\/.*)?$/, "Cannot import electron in browser code. You need to use a native.ts file"),
-     banImportPlugin(/^ts-pattern$/, "Cannot import from ts-pattern. match and P should be imported from @webpack/common"),
-@@ -237,1 +237,1 @@
+@@ -252,1 +252,1 @@
 -            return { contents: `export default "${remote}"` };
 +            return { contents: `export default "${remote}"; export const BV_REMOTE="${process.env.BV_REMOTE}"` };
+@@ -386,1 +385,0 @@
+-    banImportPlugin(builtinModuleRegex, "Cannot import node inbuilt modules in browser code. You need to use a native.ts file"),

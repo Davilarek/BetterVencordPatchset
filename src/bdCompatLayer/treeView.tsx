@@ -17,7 +17,7 @@
 */
 
 import { classNameFactory } from "@api/Styles";
-import { BaseText } from "@components/BaseText";
+import { Text as BaseText } from "@components/Text";
 import { FolderIcon } from "@components/Icons";
 import { React } from "@webpack/common";
 import { ComponentPropsWithoutRef } from "react";

@@ -227,7 +227,7 @@ const patches = [
     {
         file: "src/patch-csp.patch",
         targetFile: "src/main/csp/index.ts",
-        targetType: BuildTypes.UNIVERSAL,
+        targetType: BuildTypes.VENCORD,
     },
     {
         file: "src/patch-banImportPlugin.patch",
@@ -237,6 +237,11 @@ const patches = [
     {
         file: "src/equicord/patch-banImportPlugin.patch",
         targetFile: "scripts/build/common.mjs",
+        targetType: BuildTypes.EQUICORD,
+    },
+    {
+        file: "src/equicord/patch-csp.patch",
+        targetFile: "src/main/csp/index.ts",
         targetType: BuildTypes.EQUICORD,
     },
     // {
@@ -254,6 +259,11 @@ const patches = [
         file: "src/equicord/patch-package_json.patch",
         targetFile: "package.json",
         targetType: BuildTypes.EQUICORD,
+    },
+    {
+        file: "src/patch-tsconfig.patch",
+        targetFile: "tsconfig.json",
+        targetType: BuildTypes.UNIVERSAL,
     },
 ] as PatchKind[];
 

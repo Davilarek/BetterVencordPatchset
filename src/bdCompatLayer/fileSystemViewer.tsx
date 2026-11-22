@@ -19,7 +19,7 @@
 import { classNameFactory } from "@api/Styles";
 import { FolderIcon, PlusIcon, RestartIcon } from "@components/Icons";
 import { Button } from "@components/Button";
-import { BaseText } from "@components/BaseText";
+import { Text as BaseText } from "@components/Text";
 import { Card } from "@components/Card";
 import { Paragraph } from "@components/Paragraph";
 import { QuickAction, QuickActionCard } from "@components/settings/QuickAction";
@@ -163,7 +163,7 @@ function FileExplorer() {
     const [loadingPaths, setLoadingPaths] = useState<Set<string>>(new Set());
 
     const handleToggleExpand = async (treeItem: TreeItem<FileSystemItem>) => {
-        const item = treeItem.metadata;
+        const item = treeItem.metadata!;
         if (!item.isDirectory) return;
 
         const isExpanded = expandedPaths.includes(item.path);
@@ -200,7 +200,7 @@ function FileExplorer() {
     };
 
     const handleSelect = (treeItem: TreeItem<FileSystemItem>) => {
-        const item = treeItem.metadata;
+        const item = treeItem.metadata!;
         setSelectedItem(item.path);
 
         if (item.isDirectory) {
@@ -208,10 +208,10 @@ function FileExplorer() {
         }
     };
 
-    const loadDirectoryContents = async (path: string) => {
+    const loadDirectoryContents = async (dirPath: string, updateMainView = true) => {
         setLoading(true);
         try {
-            const contents = await getDirectoryContents(path);
+            const contents = await getDirectoryContents(dirPath);
 
             let sortedItems = [...contents];
             switch (sortBy) {
@@ -233,10 +233,17 @@ function FileExplorer() {
                 sortedItems.reverse();
             }
 
-            setItems(sortedItems);
-            setItems2(sortedItems);
+            if (updateMainView) setItems(sortedItems);
+            setItems2(prev => [
+                ...prev.filter(i => {
+                    const idx = i.path.lastIndexOf("/");
+                    const parent = idx <= 0 ? "/" : i.path.slice(0, idx);
+                    return parent !== dirPath;
+                }),
+                ...sortedItems
+            ]);
         } catch (error) {
-            compat_logger.error(`Failed to load directory ${path}:`, error);
+            compat_logger.error(`Failed to load directory ${dirPath}:`, error);
         } finally {
             setLoading(false);
         }
@@ -337,7 +344,7 @@ function FileExplorer() {
         const isDirectory = item?.isDirectory ?? true;
         const isPluginFile = !isDirectory && path.endsWith(".plugin.js");
 
-        const menuItems = [];
+        const menuItems: any[] = [];
         menuItems.push({ label: path, disabled: true });
 
         if (isDirectory) {
@@ -346,7 +353,10 @@ function FileExplorer() {
                 action: async () => {
                     try {
                         await FSUtils.importFile(path, true);
-                        loadDirectoryContents(currentPath);
+                        await Promise.all([
+                            loadDirectoryContents(currentPath),
+                            path !== currentPath ? loadDirectoryContents(path, false) : Promise.resolve()
+                        ]);
                     } catch (error) {
                         compat_logger.error("File import failed:", error);
                     }
@@ -708,7 +718,7 @@ function makeTab() {
 
 function createFilesSystemViewTab(ID: Record<string, unknown>) {
     return {
-        section: `${typeof Vencord.Util.isEquicordGuild === "undefined" ? "Vencord" : "Equicord"}BDCompatFS`, // workaround
+        section: `${typeof (Vencord.Util as any).isEquicordGuild === "undefined" ? "Vencord" : "Equicord"}BDCompatFS`, // workaround
         label: TabName,
         element: wrapTab(makeTab, TabName),
         className: "bv-fs-view",
@@ -719,7 +729,7 @@ function createFilesSystemViewTabV2() {
     return {
         title: TabName,
         Component: wrapTab(makeTab, TabName),
-        key: `${typeof Vencord.Util.isEquicordGuild === "undefined" ? "vencord" : "equicord"}_bv_fs_view`,
+        key: `${typeof (Vencord.Util as any).isEquicordGuild === "undefined" ? "vencord" : "equicord"}_bv_fs_view`,
         Icon: FolderIcon,
     };
 }

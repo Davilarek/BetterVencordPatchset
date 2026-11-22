@@ -1,0 +1,9 @@
+--- base/Equicord/src/main/csp/index.ts	2025-11-03 20:57:18.283763508 +0100
++++ dist/Equicord/src/main/csp/index.ts	2025-11-03 22:52:51.786455429 +0100
+@@ -69,5 +69,6 @@
+     "ugc.decor.fieryflames.dev": ImageSrc, // Decor CDN
+     "sponsor.ajay.app": ConnectSrc, // Dearrow API
+     "dearrow-thumb.ajay.app": ImageSrc, // Dearrow Thumbnail CDN
++    "cors-get-proxy.sirjosh.workers.dev": ConnectSrc, // Default CORS Proxy
+     "usrbg.is-hardly.online": ImageSrc, // USRBG API
+     "icons.duckduckgo.com": ImageSrc, // DuckDuckGo Favicon API (Reverse Image Search)

@@ -39,7 +39,7 @@ import { compat_logger, FSUtils, getDeferred, reloadCompatLayer, simpleGET, ZIPU
 //     return target.split(search).join(replacement);
 // };
 import { Backend, configureSingle, InMemory, MountConfiguration, fs as ZenFS_fs } from "@zenfs/core";
-import { RealFSClient, RealFs } from "real-fs-client";
+import { RealFSClient, RealFs } from "./vendor/realfs";
 import { IndexedDB as ZenFS_IndexedDB, WebStorage as ZenFS_WebStorage } from "@zenfs/dom";
 import * as ZenFS_path from "@zenfs/core/path";
 
@@ -60,7 +60,7 @@ async function checkCorsProxyUrlCsp() {
     return false;
 }
 
-const thePlugin = {
+const thePlugin: any = {
     name: PLUGIN_NAME,
     description: "Converts BD plugins to run in Vencord",
     authors: [
@@ -299,7 +299,7 @@ const thePlugin = {
                     return ev2;
                 },
                 get get() {
-                    if (Settings.plugins[thePlugin.name].enableExperimentalRequestPolyfills === true)
+                    if (Settings.plugins[PLUGIN_NAME].enableExperimentalRequestPolyfills === true)
                         return this.get_;
                     return undefined;
                 }
@@ -335,7 +335,7 @@ const thePlugin = {
                 return fakeRequest;
             },
             get request() {
-                if (Settings.plugins[thePlugin.name].enableExperimentalRequestPolyfills === true)
+                if (Settings.plugins[PLUGIN_NAME].enableExperimentalRequestPolyfills === true)
                     return this.request_;
                 return undefined;
             },

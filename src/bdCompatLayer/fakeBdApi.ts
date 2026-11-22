@@ -21,9 +21,18 @@ import { Settings } from "@api/Settings";
 const VenComponents = OptionComponentMap;
 
 import { OptionComponentMap } from "@components/settings/tabs/plugins/components";
-import { ModalAPI } from "@utils/modal";
-import { OptionType, PluginOptionBase, PluginOptionComponent, PluginOptionCustom, PluginOptionSelect, PluginOptionSlider } from "@utils/types";
-import { Forms, lodash, Text, React, Toasts, Button } from "@webpack/common";
+import { openModal } from "@utils/modal";
+import { OptionType } from "@utils/types";
+import { lodash, React } from "@webpack/common";
+
+import { Button, Forms, Text, Toasts } from "./discordShim";
+
+// Loose types for dynamically-built BD setting definitions
+type PluginOptionBase = any;
+type PluginOptionComponent = any;
+type PluginOptionCustom = any;
+type PluginOptionSelect = any;
+type PluginOptionSlider = any;
 
 import { ColorPickerSettingComponent } from "./components/ColorPickerSetting";
 import { PLUGIN_NAME } from "./constants";
@@ -318,7 +327,7 @@ export const WebpackHolder = {
         // return result;
         return Vencord.Webpack.wreq.m;
     },
-    getMangled(f, m, opt = {}) {
+    getMangled(f, m, opt: any = {}) {
         const { raw = false, ...rest } = opt;
         if (typeof f === "string" || f instanceof RegExp) {
             f = WebpackHolder.Filters.bySource(f);
@@ -643,7 +652,7 @@ export const UIHolder = {
         );
         */
 
-        ModalAPI.openModal(props => React.createElement(ConfirmationModal, Object.assign({
+        openModal(props => React.createElement(ConfirmationModal, Object.assign({
             header: title,
             confirmButtonColor: ButtonProps.Colors.BRAND,
             confirmText: confirmText,
@@ -827,6 +836,7 @@ export const UIHolder = {
                 const current = now[i];
                 const fakeOption: PluginOptionBase & { type: number; } = {
                     description: "",
+                    displayName: current.name,
                     type: 0,
                 };
                 switch (current.type) {
@@ -901,7 +911,7 @@ export const UIHolder = {
                         };
                         fakeOptionAsCustom.color = current.value || "#000000";
                         fakeOptionAsCustom.colorPresets = [];
-                        fakeOptionAsComponent.component = p => React.createElement(ColorPickerSettingComponent, {
+                        fakeOptionAsComponent.component = (p: any) => React.createElement(ColorPickerSettingComponent, {
                             onChange: p.setValue,
                             option: fakeOptionAsCustom,
                             pluginSettings: targetSettingsToSet[catName],
@@ -915,7 +925,7 @@ export const UIHolder = {
                         break;
                     }
                 }
-                const fakeElement = VenComponents[fakeOption.type] as typeof VenComponents[keyof typeof VenComponents];
+                const fakeElement = VenComponents[fakeOption.type] as any;
                 const craftingResult = current.type === "category" ?
                     React.createElement("div", { style: { marginBottom: 8 } },
                         [React.createElement(Forms.FormDivider), React.createElement(Text, { variant: "heading-lg/semibold" }, current.name)]) :
@@ -924,8 +934,11 @@ export const UIHolder = {
                         React.createElement(fakeElement, {
                             id: current.id,
                             key: current.id,
+                            setting: fakeOption,
                             option: fakeOption,
-                            onChange(newValue) {
+                            definedSettings: {},
+                            closePluginSettings() { },
+                            onChange(newValue: any) {
                                 targetSettingsToSet[catName][current.id] = newValue;
                             },
                             // onError() { },
@@ -1106,10 +1119,10 @@ class BdApiReImplementationInstance {
             );
         },
         get Text() {
-            return Vencord.Webpack.Common.Text;
+            return Text;
         },
         get Button() {
-            return Vencord.Webpack.Common.Button;
+            return Button;
         },
         get Spinner() {
             return components.Spinner;
@@ -1143,15 +1156,19 @@ class BdApiReImplementationInstance {
             //     id: `bd_compat-item-${props.id}`,
             // }, [props.name, props.note, props.children]);
             const opt = OptionType.COMPONENT;
-            const fakeElement = VenComponents[opt] as typeof VenComponents[keyof typeof VenComponents];
+            const fakeElement = VenComponents[opt] as any;
+            const fakeOption = {
+                type: opt,
+                component: () => createTextForm(props.name, props.note, false),
+            };
             return Vencord.Webpack.Common.React.createElement("div", undefined, [Vencord.Webpack.Common.React.createElement(fakeElement, {
                 id: `bd_compat-item-${props.id}`,
                 key: `bd_compat-item-${props.id}`,
-                option: {
-                    type: opt,
-                    component: () => createTextForm(props.name, props.note, false),
-                },
-                onChange(newValue) { },
+                setting: fakeOption,
+                option: fakeOption,
+                definedSettings: {},
+                closePluginSettings() { },
+                onChange(newValue: any) { },
                 // onError() { },
                 pluginSettings: { enabled: true, },
             }), props.children]);
@@ -1220,7 +1237,7 @@ class BdApiReImplementationInstance {
                 while (true) {
                     switch ((elementType as React.MemoExoticComponent<T> | React.ForwardRefExoticComponent<T>).$$typeof) {
                         case exoticComponents.memo:
-                            elementType = (elementType as React.MemoExoticComponent<T>).type;
+                            elementType = (elementType as unknown as React.MemoExoticComponent<T>).type;
                             break;
                         case exoticComponents.forwardRef:
                             elementType = (elementType as React.ForwardRefExoticComponent<T> & { render: T; }).render;
