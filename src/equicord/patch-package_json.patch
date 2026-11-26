@@ -1,12 +1,7 @@
---- base/Vencord/package.json	2025-11-03 20:57:18.274606501 +0100
-+++ dist/Vencord/package.json	2025-11-03 23:36:52.759961407 +0100
-@@ -48,6 +48,9 @@
-         "@vap/core": "0.0.12",
-         "@vap/shiki": "0.10.5",
-         "fflate": "^0.8.2",
+--- base/Equicord/package.json	2025-11-03 20:57:18.274606501 +0100
++++ dist/Equicord/package.json	2025-11-03 23:36:52.759961407 +0100
+@@ -53,2 +53,4 @@
+         "fflate": "catalog:",
 +        "@zenfs/core": "^2.5.6",
 +        "@zenfs/dom": "^1.2.9",
-+        "real-fs-client": "github:LosersUnited/RealFS-client",
-         "gifenc": "github:mattdesl/gifenc#64842fca317b112a8590f8fef2bf3825da8f6fe3",
-         "monaco-editor": "^0.52.2",
-         "nanoid": "^5.1.5",
+         "gifenc": "catalog:"

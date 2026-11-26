@@ -19,7 +19,9 @@
 import ErrorBoundary from "@components/ErrorBoundary";
 import { ModalContent, ModalFooter, ModalHeader, ModalRoot, ModalSize, openModal } from "@utils/modal";
 import { OptionType, Plugin } from "@utils/types";
-import { Button, React, Text } from "@webpack/common";
+import { React } from "@webpack/common";
+
+import { Button, Text } from "./discordShim";
 import { DetailedReactHTMLElement } from "react";
 
 import { PluginMeta } from "~plugins";

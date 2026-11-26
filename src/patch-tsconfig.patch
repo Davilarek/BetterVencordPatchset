@@ -1,0 +1,5 @@
+--- base/Vencord/tsconfig.json	2026-11-22 00:00:00.000000000 +0100
++++ dist/Vencord/tsconfig.json	2026-11-22 00:00:00.000000000 +0100
+@@ -6,1 +6,1 @@
+-        "skipLibCheck": false,
++        "skipLibCheck": true,

@@ -11,7 +11,7 @@ namespace Webpack {
  * This file contains code taken from https://github.com/BetterDiscord/BetterDiscord
  * @see https://github.com/BetterDiscord/BetterDiscord/blob/main/LICENSE
  */
-!function () { };
+void function () { };
 
 /**
  * @summary Code taken from BetterDiscord (sourced from commit: c10d0b67c0fd53fee582cf5b8bc4779e80006983
