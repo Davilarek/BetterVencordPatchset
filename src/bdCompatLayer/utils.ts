@@ -214,6 +214,7 @@ export async function reloadCompatLayer() {
     await removeAllCustomPlugins();
     await new Promise((resolve, reject) => setTimeout(resolve, 500));
     const localFs = window.require("fs");
+    FSUtils.mkdirSyncRecursive(getGlobalApi().Plugins.folder);
     const pluginFolder = localFs
         .readdirSync(getGlobalApi().Plugins.folder)
         .sort();

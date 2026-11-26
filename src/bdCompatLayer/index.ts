@@ -471,7 +471,7 @@ const thePlugin: any = {
         //     if (window.BdApi.ReqImpl.fs === undefined)
         //         return;
         //     clearInterval(checkInterval);
-        Promise.all([windowBdCompatLayer.fsReadyPromise.promise, injectedAndPatched]).then(() => {
+        Promise.all([windowBdCompatLayer.fsReadyPromise.promise, injectedAndPatched.catch(e => compat_logger.error("Compat layer init failed:", e))]).then(() => {
             windowBdCompatLayer.Router?.listeners.add(windowBdCompatLayer.mainRouterListener);
             const observer = new MutationObserver(mutations => mutations.forEach(m => window.GeneratedPlugins.forEach(p => BdApiReImplementation.Plugins.isEnabled(p.name) && p.instance.observer?.(m))));
             observer.observe(document, {
